@@ -48,12 +48,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void addFavorite(Neighbour neighbour) {
         if (!favorites.contains(neighbour))
         {
-            neighbour.setFavorite(true);
             favorites.add(neighbour);
-        }
-        else
-        {
-            Log.e("ERROR", "On essaie de d'ajouter un favoris qui est déjà dans la liste des favoris");
         }
     }
 
@@ -62,17 +57,10 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
      */
     @Override
     public void deleteFavorite(Neighbour neighbour) {
-
         if (favorites.contains(neighbour))
         {
-            neighbour.setFavorite(false);
             favorites.remove(neighbour);
         }
-        else
-        {
-            Log.e("ERROR", "On essaie de supprimer un favoris qui n'est pas dans la liste des favoris");
-        }
-
     }
 
 }

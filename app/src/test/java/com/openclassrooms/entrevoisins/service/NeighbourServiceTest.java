@@ -44,26 +44,24 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void getFavoritesWithSucces()
+    public void getFavoritesWithSuccess()
     {
         service.getFavorites().clear();
         Neighbour neighbour = new Neighbour(1,"test", "test");
-        neighbour.setFavorite(true);
         service.getFavorites().add(neighbour);
         assertTrue(service.getFavorites().contains(neighbour));
     }
 
     @Test
-    public void addFavNeighbourWithSucces()
+    public void addFavNeighbourWithSuccess()
     {
         Neighbour neighbour = new Neighbour(1,"test", "test");
         service.addFavorite(neighbour);
         assertTrue(service.getFavorites().contains(neighbour));
-        assertEquals(service.getFavorites().get(0).getFavorite(), true);
     }
 
     @Test
-    public void deleteFavNeighbourWithSucces()
+    public void deleteFavNeighbourWithSuccess()
     {
         Neighbour neighbourToDelete = service.getNeighbours().get(0);
         List<Neighbour> liste = service.getFavorites();

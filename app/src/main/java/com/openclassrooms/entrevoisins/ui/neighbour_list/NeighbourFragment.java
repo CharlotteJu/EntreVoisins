@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_details.NeighbourVueActivity
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,20 +40,23 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance()
+    {
         NeighbourFragment fragment = new NeighbourFragment();
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
@@ -64,19 +69,29 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
     /**
      * Init the List of neighbours
      */
-    private void initList() {
+    private void initList()
+    {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this,1));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this));
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onStop() {
+    public void onResume()
+    {
+        super.onResume();
+        initList();
+    }
+
+    @Override
+    public void onStop()
+    {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
@@ -86,15 +101,16 @@ public class NeighbourFragment extends Fragment implements MyNeighbourRecyclerVi
      * @param event
      */
     @Subscribe
-    public void onDeleteNeighbour(DeleteNeighbourEvent event) {
+    public void onDeleteNeighbour(DeleteNeighbourEvent event)
+    {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
 
 
     @Override
-    public void onItemClick(int position) {
-
+    public void onItemClick(int position)
+    {
         Gson gson = new Gson();
         String json = gson.toJson(mNeighbours.get(position));
         Context context = getActivity();

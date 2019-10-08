@@ -52,8 +52,16 @@ public class FavListFragment extends Fragment implements MyNeighbourRecyclerView
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        this.mApiService = DI.getNeighbourApiService();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_fav_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
@@ -64,7 +72,8 @@ public class FavListFragment extends Fragment implements MyNeighbourRecyclerView
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         initList();
         super.onResume();
     }
@@ -72,34 +81,38 @@ public class FavListFragment extends Fragment implements MyNeighbourRecyclerView
     /**
      * Init the List of neighbours
      */
-    private void initList() {
-        this.mApiService = DI.getNeighbourApiService();
+    private void initList()
+    {
         this.mFavNeighbours = mApiService.getFavorites();
-        this.mAdapter = new MyNeighbourRecyclerViewAdapter(this.mFavNeighbours, this,2);
+        this.mAdapter = new MyNeighbourRecyclerViewAdapter(this.mFavNeighbours, this);
         this.mRecyclerView.setAdapter(this.mAdapter);
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
         EventBus.getDefault().register(this);
     }
 
     @Override
-    public void onStop() {
+    public void onStop()
+    {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe
-    public void onDeleteFavorite(DeleteFavEvent event) {
+    public void onDeleteFavorite(DeleteFavEvent event)
+    {
         mApiService.deleteFavorite(event.neighbour);
         initList();
     }
 
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position)
+    {
         Gson gson = new Gson();
         String json = gson.toJson(mFavNeighbours.get(position));
         Context context = getActivity();

@@ -154,49 +154,28 @@ public class NeighboursListTest {
      * The FavList's size == number of Favorites Neighbours
      */
     @Test
-    public void myFavoritesList_haveOnlyFavoritesV2()
+    public void myFavoritesList_haveOnlyFavorites()
     {
-        //Given : Add 5 Neighbours in the Favorite List and check the List's size
+        //Given : The Favorite List is empty
+        onView(withId(R.id.container)).perform(scrollRight());
+        mFavList.clear();
+        onView(ViewMatchers.withId(R.id.fav_list_neighbours)).check(withItemCount(0));
+
+        //When : Add 5 Neighbours in the Favorite List and check the List's size
         for(int i = 0; i < 5; i++)
         {
             mApiService.addFavorite(mNeighbourList.get(i));
         }
-
-        //When : Scroll to the favorite page in the container
-        onView(withId(R.id.container)).perform(scrollRight());
 
         //Then : The FavList have 5 Neighbours
         onView(ViewMatchers.withId(R.id.fav_list_neighbours)).check(withItemCount(5));
     }
-    @Test
-    public void myFavoritesList_haveOnlyFavorites()
-    {
-        //Given : Add 5 Neighbours in the Favorite List and check the List's size
-        for(int i = 0; i < 5; i++)
-        {
-            mApiService.addFavorite(mNeighbourList.get(i));
-        }
-        onView(ViewMatchers.withId(R.id.fav_list_neighbours)).check(withItemCount(5));
-
-        onView(withId(R.id.list_neighbours)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(POSITION, click()));
-        //onView(withId(R.id.vue_add_fav_flbtn)).check(matches(withTagKey(1, 1)));
-
-        /*/Then : All the Neighbours are favorites
-        for(int i = 0; i < 6; i++)
-        {
-            onView(withId(R.id.list_neighbours)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(POSITION, click()));
-            onView(withId(R.id.vue_add_fav_flbtn)).check(matches(withResourceName(String.valueOf(R.drawable.ic_star_yellow_24dp))));
-        }*/
-
-
-    }
-
-
-
-
-
-
 
 }
+
+
+
+
+
+
+

@@ -5,6 +5,14 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="CoverageSettings">
+    <option name="settingsRevision" value="2" />
+    <option name="instrumentationEnabled" value="true" />
+    <option name="additionalCoverageFiles" value="" />
+    <option name="dataPath" value="Entrevoisins" />
+    <option name="hilightSourceBackground" value="true" />
+    <option name="hilightEvenCoveredSource" value="true" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

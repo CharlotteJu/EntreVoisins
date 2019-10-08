@@ -33,14 +33,12 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     private final List<Neighbour> mNeighbours;
     private  onItemListener mOnItemListener;
-    int fragUsed;
 
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, onItemListener onItemListener, int fragUsed) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, onItemListener onItemListener) {
 
         mNeighbours = items;
         this.mOnItemListener = onItemListener;
-        this.fragUsed = fragUsed;
     }
 
     @Override
@@ -59,7 +57,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-        if(fragUsed == 1) {
+        if(mOnItemListener instanceof NeighbourFragment) {
 
             holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,14 +75,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 }
             });
         }
-
     }
 
     @Override
     public int getItemCount() {
-
             return mNeighbours.size();
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -94,8 +89,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-
-
 
         onItemListener onItemListener;
 

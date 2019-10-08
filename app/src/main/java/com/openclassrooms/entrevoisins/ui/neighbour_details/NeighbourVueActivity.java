@@ -63,18 +63,18 @@ public class NeighbourVueActivity extends AppCompatActivity {
         Gson gson = new Gson();
         m_Neighbour = gson.fromJson(m_Intent.getStringExtra("json"), Neighbour.class);
 
+
         ButterKnife.bind(this);
         updateText();
         configButton();
 
+
         mFavBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(m_Neighbour.getFavorite() == false)
+                if(!m_ApiService.getFavorites().contains(m_Neighbour))
                 {
                     m_ApiService.addFavorite(m_Neighbour);
-
                 }
                 else
                 {
@@ -114,16 +114,13 @@ public class NeighbourVueActivity extends AppCompatActivity {
      */
     private void configButton()
     {
-        if(m_Neighbour.getFavorite() == true)
+        if(m_ApiService.getFavorites().contains(m_Neighbour))
         {
             mFavBtn.setImageResource(R.drawable.ic_star_yellow_24dp);
-
-
         }
         else
         {
             mFavBtn.setImageResource(R.drawable.ic_star_border_yellow_24dp);
-
         }
     }
 
