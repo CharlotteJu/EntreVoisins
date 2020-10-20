@@ -1,4 +1,10 @@
-README 
+## Compétences utilisées 
+
+- ViewPager
+- EventBus
+- Glide
+- Json
+
 
 # EntreVoisins
 
